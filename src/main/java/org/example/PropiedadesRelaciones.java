@@ -7,19 +7,6 @@ import org.graphstream.ui.view.Viewer;
 
 public class PropiedadesRelaciones {
 
-//    // Verifica si la relación es sobre el conjunto dado
-//    public static boolean esRelacionValida(Set<Integer> conjunto, Set<Par> relacion)
-//    {
-//        for (Par par : relacion) {
-//
-//            if (!conjunto.contains(par.x) || !conjunto.contains(par.y)) {
-//                return false;
-//            }
-//        }
-//
-//        return true;
-//    }
-
     // Verifica si la relación es reflexiva
     public static boolean esReflexiva(Set<Integer> conjunto, Set<Par> relacion) {
         //itera el conjunto para instanciar un objeto Par como elemento iterado del conjunto y verifica si esta en la relacion
@@ -37,7 +24,7 @@ public class PropiedadesRelaciones {
         System.out.println("\nPares reflexivos requeridos:");
         for (int elemento : conjunto) {
             Par par = new Par(elemento, elemento);
-            String estado = relacion.contains(par) ? "✅" : "❌";
+            String estado = relacion.contains(par) ? "[+]" : "[-]";
             System.out.println(estado + " " + par);
         }
     }
@@ -53,20 +40,15 @@ public class PropiedadesRelaciones {
         return true;
     }
 
-    // Verifica si la relación es irreflexiva simple
-//    public static boolean esIrreflexiva(Set<Integer> conjunto, Set<Par> relacion) {
-//        return !esReflexiva(conjunto, relacion); // ✅ Esto sí funciona
-//    }
-
     //Muestra los pares irreflexivos
     public static void mostrarParesIrreflexivos(Set<Integer> conjunto, Set<Par> relacion) {
         System.out.println("\nPares irreflexivos verificados:");
         for (int elemento : conjunto) {
             Par par = new Par(elemento, elemento);
             if (relacion.contains(par)) {
-                System.out.println("❌ Par reflexivo encontrado: " + par + " (debería no existir)");
+                System.out.println("[-] Par reflexivo encontrado: " + par + " (debería no existir)");
             } else {
-                System.out.println("✅ No existe par reflexivo: " + par);
+                System.out.println("[+] No existe par reflexivo: " + par);
             }
         }
     }
@@ -89,9 +71,9 @@ public class PropiedadesRelaciones {
         for (Par par : relacion) {
             Par simetrico = new Par(par.y, par.x);
             if (relacion.contains(simetrico)) {
-                System.out.println("✅ Par (" + par.x + "," + par.y + ") tiene su simétrico (" + simetrico.x + "," + simetrico.y + ")");
+                System.out.println("[+] Par (" + par.x + "," + par.y + ") tiene su simétrico (" + simetrico.x + "," + simetrico.y + ")");
             } else {
-                System.out.println("❌ Par (" + par.x + "," + par.y + ") NO tiene su simétrico (" + simetrico.x + "," + simetrico.y + ")");
+                System.out.println("[-] Par (" + par.x + "," + par.y + ") NO tiene su simétrico (" + simetrico.x + "," + simetrico.y + ")");
             }
         }
     }
@@ -102,16 +84,11 @@ public class PropiedadesRelaciones {
             Par simetrico = new Par(par.y, par.x);
             // Para asimetría: si existe CUALQUIER simétrico (incluidos reflexivos)
             if (relacion.contains(simetrico)) {
-                return false; // ❌ No permite ningún simétrico
+                return false; // No permite ningún simétrico
             }
         }
         return true;
     }
-
-    // Más simple aún:
-//    public static boolean esAsimetrica(Set<Par> relacion) {
-//        return !esSimetrica(relacion); // ❌ Nada de simetría
-//    }
 
     //Muestra los pares asimetricos de la relacion
     public static void mostrarParesAsimetricos(Set<Par> relacion) {
@@ -121,14 +98,14 @@ public class PropiedadesRelaciones {
 
             if (par.equals(simetrico)) {
                 // Es un par reflexivo (a,a) - permitido en asimétrica
-                System.out.println("✅ Par (" + par.x + "," + par.y + ") es reflexivo (permitido)");
+                System.out.println("[+] Par (" + par.x + "," + par.y + ") es reflexivo (permitido)");
             } else if (relacion.contains(simetrico)) {
                 // Tiene simétrico pero no es reflexivo - PROHIBIDO
-                System.out.println("❌ Par (" + par.x + "," + par.y + ") tiene simétrico (" +
+                System.out.println("[-] Par (" + par.x + "," + par.y + ") tiene simétrico (" +
                         simetrico.x + "," + simetrico.y + ") (NO permitido)");
             } else {
                 // No tiene simétrico - PERMITIDO
-                System.out.println("✅ Par (" + par.x + "," + par.y + ") no tiene simétrico (permitido)");
+                System.out.println("[+] Par (" + par.x + "," + par.y + ") no tiene simétrico (permitido)");
             }
         }
     }
@@ -155,14 +132,14 @@ public class PropiedadesRelaciones {
 
             if (par.equals(simetrico)) {
                 // Es un par reflexivo (a,a) - PERMITIDO en antisimétrica
-                System.out.println("✅ Par (" + par.x + "," + par.y + ") es reflexivo (permitido)");
+                System.out.println("[+] Par (" + par.x + "," + par.y + ") es reflexivo (permitido)");
             } else if (relacion.contains(simetrico)) {
                 // Tiene simétrico pero no es reflexivo - PROHIBIDO
-                System.out.println("❌ Par (" + par.x + "," + par.y + ") tiene simétrico (" +
+                System.out.println("[-] Par (" + par.x + "," + par.y + ") tiene simétrico (" +
                         simetrico.x + "," + simetrico.y + ") (NO permitido)");
             } else {
                 // No tiene simétrico - PERMITIDO
-                System.out.println("✅ Par (" + par.x + "," + par.y + ") no tiene simétrico (permitido)");
+                System.out.println("[+] Par (" + par.x + "," + par.y + ") no tiene simétrico (permitido)");
             }
         }
     }
@@ -213,18 +190,18 @@ public class PropiedadesRelaciones {
                 for (int z : segundosElementos) {
                     // Verificar si existe (par1.x, z)
                     if (!mapa.getOrDefault(par1.x, Collections.emptySet()).contains(z)) {
-                        System.out.println("❌ Falta par transitivo: (" + par1.x + "," + z + ")");
+                        System.out.println("[-] Falta par transitivo: (" + par1.x + "," + z + ")");
                         System.out.println("   Porque existe (" + par1.x + "," + par1.y + ") y (" + par1.y + "," + z + ")");
                         esTransitiva = false;
                     } else {
-                        System.out.println("✅ Par transitivo presente: (" + par1.x + "," + z + ")");
+                        System.out.println("[+] Par transitivo presente: (" + par1.x + "," + z + ")");
                     }
                 }
             }
         }
 
         if (esTransitiva) {
-            System.out.println("✅ Todos los pares transitivos están presentes");
+            System.out.println("[+] Todos los pares transitivos están presentes");
         }
     }
 
@@ -462,7 +439,7 @@ public class PropiedadesRelaciones {
         System.setProperty("org.graphstream.ui", "swing");
         Graph graph = new SingleGraph("Diagrama de Hasse");
 
-        // 🎨 ESTILOS PARA EL GRÁFICO
+        // ESTILOS PARA EL GRÁFICO
         String stylesheet = """
         node {
             size: 30px;
@@ -484,7 +461,7 @@ public class PropiedadesRelaciones {
         """;
 
         graph.setAttribute("ui.stylesheet", stylesheet);
-        graph.setAttribute("ui.title", "Diagrama de Hasse");  // 🏷️ Título de ventana
+        graph.setAttribute("ui.title", "Diagrama de Hasse");  // Título de ventana
 
         // Crear nodos
         for (Integer elemento : elementos) {
@@ -498,7 +475,7 @@ public class PropiedadesRelaciones {
             graph.addEdge(edgeId, String.valueOf(arista.x), String.valueOf(arista.y));
         }
 
-        // 🎨 MEJORAR VISUALIZACIÓN
+        // MEJORAR VISUALIZACIÓN
         graph.setAttribute("ui.quality");
         graph.setAttribute("ui.antialias");
 
